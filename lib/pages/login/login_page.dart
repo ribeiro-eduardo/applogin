@@ -59,14 +59,14 @@ class _LoginPageState extends State<LoginPage> implements LoginPageContract {
     var registerBtn = new RaisedButton(
       padding: const EdgeInsets.all(10.0),
       onPressed: _register,
-      child: new Text("Register"),
+      child: new Text("Novo"),
       color: Colors.green,
     );
     var loginForm = new Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         new Text(
-          "Sqflite App Login",
+          "Login App",
           textScaleFactor: 2.0,
         ),
         new Form(
@@ -77,24 +77,45 @@ class _LoginPageState extends State<LoginPage> implements LoginPageContract {
                 padding: const EdgeInsets.all(20.0),
                 child: new TextFormField(
                   onSaved: (val) => _username = val,
-                  decoration: new InputDecoration(labelText: "Username"),
+                  decoration: new InputDecoration(labelText: "Usuário"),
+                  validator: (val) {
+                    if (val.isEmpty) {
+                      return 'O campo Usuário é obrigatório!';
+                    }
+                  },
                 ),
               ),
               new Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: new TextFormField(
+                  obscureText: true,
                   onSaved: (val) => _password = val,
-                  decoration: new InputDecoration(labelText: "Password"),
+                  decoration: new InputDecoration(labelText: "Senha"),
+                  validator: (val) {
+                    if (val.isEmpty) {
+                      return 'O campo Senha é obrigatório!';
+                    }
+                  },
                 ),
-              )
+              ),
             ],
           ),
         ),
-        new Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: loginBtn),
+        new Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: loginBtn
+            ),
+            registerBtn
+          ],
+        )
+        // new Padding(
+        //     padding: const EdgeInsets.all(10.0),
+        //     child: loginBtn),
 
-        registerBtn
+        // registerBtn
       ],
     );
 
@@ -118,21 +139,40 @@ class _LoginPageState extends State<LoginPage> implements LoginPageContract {
     setState(() {
       _isLoading = false;
     });
+    print("Senha errada");
   }
 
   @override
   void onLoginSuccess(User user) async {
-    print("entrou no onLoginSucess");
+    print("entrou no onLoginSucess!");
     // TODO: implement onLoginSuccess
     _showSnackBar(user.toString());
     setState(() {
       _isLoading = false;
     });
-    if(user.flaglogado == "logado"){
-      print("Logado");
+    if(user.flaglogado == "existente"){
+      print("existente");
       Navigator.of(context).pushNamed("/home");
     }else{
-      print("Nao logado");
+      print("Nao existente");
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          // return object of type Dialog
+          return AlertDialog(
+            title: new Text("Usuário ou Senha incorretos"),
+            actions: <Widget>[
+              // usually buttons at the bottom of the dialog
+              new FlatButton(
+                child: new Text("Fechar"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
     }
   }
 }

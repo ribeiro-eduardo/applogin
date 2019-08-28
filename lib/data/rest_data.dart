@@ -18,7 +18,7 @@ class RestData {
     userRetorno = await db.selectUser(user);
     
     if (userRetorno != null) {
-      flaglogado = "logado";
+      flaglogado = "existente";
       return new Future.value(new User(null, username, password, flaglogado));
     }
     else {

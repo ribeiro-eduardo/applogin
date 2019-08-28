@@ -50,10 +50,9 @@ class DatabaseHelper {
   }
 
   // delete
-  Future<int> deleteUser(User user) async {
+  Future<int> deleteUser(int id) async {
     var dbClient = await db;
-    int res = await dbClient.delete("User");
-    return res;
+    return await dbClient.delete("User", where: "id = ?", whereArgs: [id]);
   }
 
   Future<User> selectUser(User user) async {
@@ -75,7 +74,25 @@ class DatabaseHelper {
     } 
   }
 
-  Future<User> selectAll() async {
+  Future<List> selectAll() async {
     print("New screen");
+    var dbClient = await db;
+    // List<Map> list = await dbClient.rawQuery("SELECT * FROM User");
+    // List<User> usuarios = new List();
+    // for (int i = 0; i < list.length; i++) {
+    //   var user = new User (list[i]['name'], list[i]['username'], list[i]['password'], list[i]['flaglogado']);
+    //   user.setUserId(list[i]['id']);
+    //   usuarios.add(user);
+    // }
+    // print(usuarios.length);
+    // return usuarios;
+    var result = await dbClient.query('User', columns: ["id", "name", "username"]);
+    return result.toList();
+  }
+
+  Future<List<Map<String, dynamic>>> queryAllRows() async {
+    print("query all rows ******************");
+    var dbClient = await db;
+    return await dbClient.query("User");
   }
 }

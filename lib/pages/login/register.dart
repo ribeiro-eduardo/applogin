@@ -19,7 +19,7 @@ class _RegisterPageState extends State<RegisterPage> {
     _ctx = context;
     var loginBtn = new RaisedButton(
       onPressed: _submit,
-      child: new Text("Register"),
+      child: new Text("Registrar"),
       color: Colors.green
     );
 
@@ -27,7 +27,7 @@ class _RegisterPageState extends State<RegisterPage> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         new Text(
-          "Sqflite App Login",
+          "Preencha os dados abaixo",
           textScaleFactor: 2.0,
         ),
         new Form(
@@ -38,21 +38,21 @@ class _RegisterPageState extends State<RegisterPage> {
                 padding: const EdgeInsets.all(10.0),
                 child: new TextFormField(
                   onSaved: (val) => _name = val,
-                  decoration: new InputDecoration(labelText: "Name"),
+                  decoration: new InputDecoration(labelText: "Nome"),
                 ),
               ),
               new Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: new TextFormField(
                   onSaved: (val) => _username = val,
-                  decoration: new InputDecoration(labelText: "Email"),
+                  decoration: new InputDecoration(labelText: "Usuário"),
                 ),
               ),
               new Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: new TextFormField(
                   onSaved: (val) => _password = val,
-                  decoration: new InputDecoration(labelText: "Password"),
+                  decoration: new InputDecoration(labelText: "Senha"),
                 ),
               ),
             ],
@@ -64,7 +64,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Register"),
+        title: new Text("Novo Usuário"),
       ),
       key: scaffoldKey,
       body: new Container(

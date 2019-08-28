@@ -21,8 +21,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: 'Sqflite App',
-      theme: new ThemeData(primarySwatch: Colors.teal),
+      color: Colors.blueAccent[700],
+      // theme: new ThemeData(primarySwatch: Colors.blue),
       routes: routes,
+      debugShowCheckedModeBanner: false,
     );
   }
 }
